@@ -1,0 +1,12 @@
+.env*
+.dev.vars
+outputs/
+.wrangler/
+.vinext/
+.next/
+.sites-runtime/
+.openai/
+dist/
+node_modules/
+*.log
+README-MEDICALSHOP.md

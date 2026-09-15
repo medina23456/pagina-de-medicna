@@ -1,0 +1,27 @@
+export type Category = {id:string;name:string;title:string;description:string;image:string;crop?:number[]};
+export type Product = {id:string;name:string;category:string;description:string;price:number|null;image:string;crop?:number[];sizes:string;colors:string;stock:string;featured:boolean;visible:boolean};
+export type Content = {settings:Record<string,string>;categories:Category[];products:Product[]};
+const poster='/assets/coleccion.jpeg';
+const crops=[[16,778,155,158],[181,778,150,158],[333,778,150,158],[482,778,140,158],[629,778,130,158],[766,778,118,158],[889,778,125,158]];
+export const initialContent:Content={settings:{brand:'Medicalshop Jaén',heroTitle:'Cuidamos de quienes\ncuidan de todos.',heroDescription:'Uniformes, equipos e insumos médicos para acompañarte en cada etapa de tu vocación.',heroImage:'/assets/hero.png',logo:'/assets/logo.png',whatsapp:'51932122822',address:'Calle Garcilaso de la Vega N° 714, Jaén',locationNote:'Al costado del Colegio Secundario Ramón Castilla',announcement:'Para profesionales de la salud y estudiantes',aboutTitle:'Cerca de ti.\nA la altura de tu vocación.',aboutText:'En Medicalshop Jaén encuentras ropa médica, equipamiento e insumos en un solo lugar. Te acompañamos a elegir lo que necesitas con una atención cercana y personalizada.',storeImage:'/assets/tienda.jpeg',footerText:'Tu salud también se viste bien.',accent:'#1267a5',catalogTitle:'Todo para tu día a día.',categoriesTitle:'Encuentra lo que va contigo.',contactTitle:'Tu próxima jornada empieza aquí.',contactText:'Visítanos en Jaén o conversemos por WhatsApp. Te ayudamos a encontrar lo que necesitas.',heroButton:'Explorar el catálogo',catalogNote:'Imágenes referenciales. Consulta precios, modelos, tallas y disponibilidad por WhatsApp.',service1:'Atención personalizada',service2:'Variedad para tu profesión',service3:'Compra por WhatsApp'},categories:[
+{id:'uniformes',name:'Uniformes médicos',title:'Viste tu vocación.',description:'Comodidad y estilo para acompañarte durante toda tu jornada.',image:poster,crop:crops[0]},
+{id:'batas',name:'Mandiles y batas',title:'Profesional, en cada detalle.',description:'Batas y mandiles para profesionales y estudiantes de la salud.',image:poster,crop:crops[1]},
+{id:'calzado',name:'Calzado médico',title:'Cada paso cuenta.',description:'Encuentra el calzado que acompaña tu ritmo de trabajo.',image:poster,crop:crops[3]},
+{id:'equipos',name:'Equipos e instrumental',title:'Precisión para tu vocación.',description:'Explora equipos y accesorios para tu práctica profesional.',image:poster,crop:crops[4]},
+{id:'insumos',name:'Insumos médicos',title:'Lo esencial para cuidar.',description:'Materiales e insumos para complementar tu espacio de atención.',image:'/assets/equipos.jpeg',crop:[690,480,240,170,1600,800]},
+{id:'movilidad',name:'Movilidad y mobiliario',title:'Más apoyo. Más posibilidades.',description:'Sillas de ruedas, ayudas de movilidad y mobiliario hospitalario.',image:'/assets/equipos.jpeg',crop:[490,340,310,240,1600,800]},
+{id:'accesorios',name:'Accesorios',title:'Pequeños detalles, gran compañía.',description:'Gorros, bolsos y accesorios para completar tu día.',image:poster,crop:crops[5]}
+],products:[
+['uniforme-clasico','Uniforme médico clásico','uniformes',0,'Conjunto de uso profesional. Consulta los colores y tallas disponibles.','XS, S, M, L, XL','Azul marino, Celeste, Turquesa'],
+['bata-blanca','Bata médica blanca','batas',1,'Un esencial para profesionales de la salud y estudiantes.','S, M, L, XL','Blanco'],
+['conjunto-quirurgico','Conjunto quirúrgico','uniformes',2,'Camiseta y pantalón para acompañar tu jornada.','S, M, L, XL','Celeste, Lila, Rosa'],
+['zueco-medico','Zueco médico','calzado',3,'Calzado de trabajo. Consulta modelos y numeración.','','Blanco, Azul marino'],
+['estetoscopio','Estetoscopio','equipos',4,'Consulta los modelos de estetoscopios y accesorios disponibles.','',''],
+['gorro-quirurgico','Gorro quirúrgico','accesorios',5,'Complementa tu uniforme con diseños lisos y estampados.','','Liso, Estampado'],
+['mochila','Mochila profesional','accesorios',6,'Lleva contigo tus accesorios de uso diario.','','Negro, Rosa']
+].map((p,i)=>({id:p[0],name:p[1],category:p[2],description:p[4],price:null,image:poster,crop:crops[Number(p[3])],sizes:p[5],colors:p[6],stock:'Consultar',featured:i<4,visible:true} as Product)).concat([
+{id:'silla-ruedas',name:'Silla de ruedas',category:'movilidad',description:'Consulta modelos, dimensiones y disponibilidad con nuestro equipo.',price:null,image:'/assets/equipos.jpeg',crop:[490,340,175,230,1600,800],sizes:'',colors:'',stock:'Consultar',featured:false,visible:true},
+{id:'insumos-curacion',name:'Insumos de curación',category:'insumos',description:'Materiales de curación. Escríbenos con el detalle de lo que necesitas.',price:null,image:'/assets/equipos.jpeg',crop:[640,495,220,170,1600,800],sizes:'',colors:'',stock:'Consultar',featured:false,visible:true},
+{id:'cama-hospitalaria',name:'Cama hospitalaria',category:'movilidad',description:'Solicita información sobre modelos y características disponibles.',price:null,image:'/assets/equipos.jpeg',crop:[670,335,280,185,1600,800],sizes:'',colors:'',stock:'Consultar',featured:false,visible:true}
+])};
+export function whatsappUrl(phone:string,product?:string,details=''){return `https://wa.me/${phone.replace(/\D/g,'')}?text=${encodeURIComponent(product?`Hola, estoy interesado en ${product}${details?`. ${details}`:''}. ¿Podrían darme más información?`:'Hola Medicalshop Jaén, quisiera información sobre sus productos.')}`;}
