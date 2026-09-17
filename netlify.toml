@@ -1,6 +1,7 @@
 [build]
   command = "node -e \"console.log('Medicalshop Jaen static site ready for Netlify')\""
   publish = "public"
+  functions = "netlify/functions"
 
 [build.environment]
   NODE_VERSION = "22"
