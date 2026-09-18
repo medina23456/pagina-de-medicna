@@ -56,21 +56,21 @@ const readData = async () => {
   return existing || { config: defaultConfig, products: defaultProducts, updatedAt: null };
 };
 
-export default async (request) => {
+export const handler = async (event) => {
   try {
-    if (request.method === 'GET') return json(200, await readData());
+    if (event.httpMethod === 'GET') return json(200, await readData());
 
-    if (request.method === 'POST') {
+    if (event.httpMethod === 'POST') {
       if (!secret()) return json(500, { error: 'ADMIN_PASSWORD no esta configurado en Netlify.' });
-      const body = await request.json().catch(() => ({}));
+      const body = event.body ? JSON.parse(event.body) : {};
       if (body.password !== secret()) return json(401, { error: 'Clave incorrecta' });
       return json(200, { token: tokenFor() });
     }
 
-    if (request.method === 'PUT') {
-      const auth = request.headers.get('authorization') || '';
+    if (event.httpMethod === 'PUT') {
+      const auth = event.headers.authorization || event.headers.Authorization || '';
       if (!verify(auth.replace('Bearer ', ''))) return json(401, { error: 'Sesion no autorizada' });
-      const body = await request.json();
+      const body = event.body ? JSON.parse(event.body) : {};
       const data = {
         config: { ...defaultConfig, ...(body.config || {}) },
         products: Array.isArray(body.products) ? body.products : defaultProducts,
